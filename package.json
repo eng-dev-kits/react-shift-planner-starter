@@ -1,11 +1,24 @@
 {
   "name": "react-shift-planner-starter",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": false,
-  "description": "Open-source weekly employee shift scheduler starter: HTML, CSS and JavaScript with no external dependencies.",
+  "description": "Open-source weekly employee shift scheduling starter with a plain JavaScript browser demo and optional React integration example.",
   "type": "module",
-  "engines": {"node": ">=20"},
-  "scripts": {"start": "node server.mjs", "test": "node --test tests/*.test.mjs", "check": "node --check server.mjs && node --check src/schedule.mjs && node --check public/app.mjs"},
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check server.mjs && node --check src/schedule.mjs && node --check public/app.js"
+  },
   "license": "MIT",
-  "keywords": ["shift-planner", "schedule", "roster", "workforce", "opensource", "starter"]
+  "keywords": [
+    "shift-planner",
+    "schedule",
+    "roster",
+    "workforce",
+    "opensource",
+    "starter"
+  ]
 }

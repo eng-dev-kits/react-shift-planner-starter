@@ -10,10 +10,10 @@ const assets = new Map([
   ['/', 'public/index.html'],
   ['/index.html', 'public/index.html'],
   ['/styles.css', 'public/styles.css'],
-  ['/app.mjs', 'public/app.mjs'],
+  ['/app.js', 'public/app.js'],
   ['/schedule.mjs', 'src/schedule.mjs'],
 ]);
-const mime = { '.html': 'text/html; charset=utf-8', '.css':'text/css; charset=utf-8', '.mjs':'text/javascript; charset=utf-8' };
+const mime = { '.html': 'text/html; charset=utf-8', '.css':'text/css; charset=utf-8', '.mjs':'text/javascript; charset=utf-8', '.js':'text/javascript; charset=utf-8' };
 
 const server = http.createServer(async (request, response) => {
   const url = new URL(request.url || '/', 'http://localhost');

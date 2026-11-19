@@ -1,0 +1,18 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { localDateKey,isDateKey,dateFromKey,addDays,mondayOf,weekdays,timeToMinutes,shiftDuration,validateShift,weeklyMinutes,seedDemo,deserializeState } from '../src/schedule.mjs';
+const employees=[{id:'a',name:'Alex',role:'Team'}];
+const good={employeeId:'a',date:'2026-11-19',start:'08:00',end:'16:00',kind:'day',note:''};
+test('Monday anchor is stable',()=>assert.equal(mondayOf('2026-11-19'),'2026-11-16'));
+test('week contains seven valid consecutive dates',()=>assert.deepEqual(weekdays('2026-11-19'),['2026-11-16','2026-11-17','2026-11-18','2026-11-19','2026-11-20','2026-11-21','2026-11-22']));
+test('year boundary is correct',()=>assert.equal(addDays('2026-12-31',1),'2027-01-01'));
+test('rejects invalid calendar days',()=>{assert.equal(isDateKey('2026-02-30'),false);assert.equal(isDateKey('2026-02-28'),true);assert.equal(isDateKey('junk'),false)});
+test('DST transition produces consecutive local calendar days',()=>{assert.deepEqual(weekdays('2026-03-29'),['2026-03-23','2026-03-24','2026-03-25','2026-03-26','2026-03-27','2026-03-28','2026-03-29']);assert.equal(addDays('2026-03-29',1),'2026-03-30')});
+test('time parsing validates strict 24-hour times',()=>{assert.equal(timeToMinutes('08:15'),495);assert.throws(()=>timeToMinutes('24:00'));assert.throws(()=>timeToMinutes('bad'))});
+test('rejects shift with unknown person',()=>assert.match(validateShift({...good,employeeId:'unknown'},employees),/valid team/));
+test('rejects end before or at start',()=>assert.match(validateShift({...good,end:'07:00'},employees),/later/));
+test('requires quarter hour increments',()=>assert.match(validateShift({...good,start:'08:10'},employees),/15-minute/));
+test('valid shift passes',()=>assert.equal(validateShift(good,employees),null));
+test('weekly hours total only applicable week',()=>assert.equal(weeklyMinutes([{...good,id:'x'}, {...good,id:'y',date:'2026-11-20'}, {...good,id:'z',date:'2026-12-01'}],'2026-11-16'),960));
+test('example seed contains demo people and shifts',()=>{const s=seedDemo(new Date(2026,10,19));assert.equal(s.employees.length,5);assert.ok(s.shifts.length>10);assert.ok(s.shifts.every(x=>validateShift(x,s.employees)===null))});
+test('persistence rejects malformed state',()=>{assert.equal(deserializeState('not-json'),null);assert.equal(deserializeState('{"version":2}'),null);assert.equal(deserializeState(JSON.stringify({version:1,employees,shifts:[{...good,id:'x'}]})).shifts.length,1)});

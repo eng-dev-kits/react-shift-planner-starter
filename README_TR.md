@@ -26,3 +26,10 @@ Bu sürüm, GitHub'da public hale geldikten sonra açık kaynak referans program
 ### Doğru isimlendirme
 
 Repository adı `react-shift-planner-starter` olsa da şu anki demo **vanilla JavaScript** kullanır; ayrıca `react/` klasöründe React entegrasyon örneği vardır. Tam React komponent kütüphanesi olarak pazarlama. Daha sonra gerçek React versiyonuna dönüştürebiliriz.
+
+### V1.1 güncellemesi
+
+- Çalışan Hostinger demosu: https://engconsulting.be/shift-planner/shift-planner/
+- V1.1 arayüzü `public/app.js` ve `public/index.html` kullanır; eski `public/app.mjs` artık kullanılmaz.
+- GitHub’a güncellemeyi yükledikten sonra Code sekmesindeki `public/app.mjs` dosyasını elle silebilirsin.
+- Bu sürüm gerçek React paketi değil: Vanilla JavaScript demo + `react/` örneği.
